@@ -19,6 +19,7 @@ void principal();
 void pedirDatos();
 void mostrarDatos();
 void buscarxID();
+void editarDatos();
 
 void agregar(CIUDAD *c){
     ciudades[pos] = *c;
@@ -130,4 +131,9 @@ void buscarxID(){
     cout << c.nombre << endl;
     cout << c.descripcion << endl;
     cout << "==================" << endl;
+}
+
+
+void editarDatos(){
+    int id
 }
