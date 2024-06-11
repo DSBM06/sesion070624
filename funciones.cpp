@@ -17,6 +17,8 @@ CIUDAD buscar(int id);
 int menu();
 void principal();
 void pedirDatos();
+void mostrarDatos();
+void buscarxID();
 
 void agregar(CIUDAD *c){
     ciudades[pos] = *c;
@@ -66,7 +68,7 @@ int menu(){
     cout << "4. Buscar \n";
     cout << "5. Mostrar Todo\n";
     cout << "6. Salir\n ";
-    cout << "Digite la opción ";
+    cout << "Digite la opcion ";
     cin >> op;
     return op;
 }
@@ -78,6 +80,12 @@ void principal(){
         switch(op){
             case 1:
                 pedirDatos();
+                break;
+            case 4:
+                buscarxID();
+                break;
+            case 5: 
+                mostrarDatos();
                 break;
             case 6:
                 cout << "Adios, mi tierno\n";
@@ -96,9 +104,30 @@ void pedirDatos(){
     cout << "ID: ";
     cin >> ciudad.id;
     cout << "NOMBRE: ";
-    cin >> ciudad.nombre;
+    scanf(" %[^\n]", ciudad.nombre);
     cout << "DESCRIPCION: ";
-    cin >> ciudad.descripcion;
+    scanf(" %[^\n]", ciudad.descripcion);
     agregar(&ciudad);
     cout << "Registro Agregado....\n";
+}
+
+void mostrarDatos(){
+    for(int i = 0; i < pos; i++){
+        cout << "ID: " << ciudades[i].id << endl;
+        cout <<"Nombres: " << ciudades[i].nombre << endl;
+        cout <<"Descripcion: " << ciudades[i].descripcion << endl;
+    }
+}
+
+void buscarxID(){
+    int id;
+    cout << "Dime el ID de la ciudad a buscar: ";
+    cin >> id;
+    CIUDAD c;
+    c = buscar(id);
+    cout << "==================" << endl;
+    cout << c.id << endl;
+    cout << c.nombre << endl;
+    cout << c.descripcion << endl;
+    cout << "==================" << endl;
 }
