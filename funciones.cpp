@@ -2,6 +2,8 @@
 #include <string.h>
 #include "variables.h"
 #include <locale.h>
+#include <fstream>
+#include <cstdlib>
 
 using namespace std;
 
@@ -22,6 +24,10 @@ void showData(CIUDAD &c);
 void buscarxID();
 void editarDatos();
 void eliminarDatos();
+
+//Manejo de archivos
+int cargarCiudad();
+void writeFile(const CIUDAD &ciudad);
 
 
 void agregar(CIUDAD *c){
@@ -79,6 +85,7 @@ int menu(){
 
 void principal(){
     int op;
+    pos = cargarCiudad();
     do{
         op = menu();
         switch(op){
@@ -123,6 +130,7 @@ void pedirDatos(){
     scanf(" %[^\n]", ciudad.descripcion);
     agregar(&ciudad);
     cout << "Registro Agregado....\n";
+    writeFile(ciudad);
 }
 
 void mostrarDatos(){
@@ -186,4 +194,35 @@ void eliminarDatos(){
         return;
     }
     eliminar(id);
+}
+
+int cargarCiudad(){
+    ifstream archivo("ciudades.txt");
+    if(archivo.fail()){
+        return 0;
+    }
+
+    int i = 0;
+    while(archivo >> ciudades[i].id){
+        archivo.ignore();
+        archivo.getline(ciudades[i].nombre, 50);
+        archivo.getline(ciudades[i].descripcion, 100);
+        i++;
+    }
+    archivo.close();
+    return i;
+}
+void writeFile(const CIUDAD &ciudad){
+    ofstream archivo;
+
+    archivo.open("ciudades.txt", ios::app);
+
+    if(archivo.fail()){
+        cout << "No se pudo abrir el archivo\n";
+        exit(1);
+    }
+    archivo << ciudad.id << endl;
+    archivo << ciudad.nombre << endl;
+    archivo << ciudad.descripcion << endl;
+    archivo.close();
 }
